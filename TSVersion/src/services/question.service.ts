@@ -34,6 +34,7 @@ import { getMembersFromTeam } from "./team.service";
 import { QuestionType } from "@interfaces/enums/question.enum";
 import { TaskStageMechanics } from "@interfaces/enums/taskStage.enum";
 import { getQuestionGroupFromTeam } from "./questionGroup.service";
+import { Power } from "@interfaces/enums/taskAttempt.enum";
 
 // for teachers
 export async function getQuestionsFromPretaskForTeacher(
@@ -365,8 +366,19 @@ export async function getNextQuestionFromDuringtaskForStudent(
     ) {
       questions[0].options = questions[0].options = [];
     } else {
-      questions[0].content = "/HIDDEN QUESTION/";
+      switch (power) {
+        case Power.MEMORY_PRO:
+          questions[0].content = "{Hidden Question|Pregunta Oculta}";
+          break;
+        case Power.SUPER_RADAR:
+          questions[0].content = "[Hidden Question|Pregunta oculta]";
+          break;
+        default:
+          questions[0].content = "Hidden question";
+      }
+      // questions[0].content = "/HIDDEN QUESTION/";
       questions[0].hint = "Ask a teammate for the hidden question";
+      questions[0].hint = "La pregunta la tiene un compañero0";
     }
   }
 
